@@ -40,7 +40,7 @@
                         <td>{{ $homebudget->category->name }}</td>
                         <td>{{ $homebudget->price }}</td>
                         <td class="button-td">
-                          <form action="" method="">
+                          <form action="{{ route('homebudget.edit', ['id' => $homebudget->id]) }}" method="">
                             <input type="submit" value="更新" class="edit-button">
                           </form>
                           <form action="" method="">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\HomeBudget;
+use Illuminate\Support\Facades\Validator;
 
 class HomebudgetController extends Controller
 {
@@ -13,9 +14,9 @@ class HomebudgetController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        //$categories = Category::all();
         $homebudgets = HomeBudget::with('category')->orderBy('date', 'desc')->paginate(3);
-        return view('homebudget.index', compact('categories', 'homebudgets'));
+        return view('homebudget.index', compact('homebudgets'));
     }
 
     /**
@@ -69,15 +70,38 @@ class HomebudgetController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $homebudget = HomeBudget::find($id);
+        $categories = Category::all();
+        return view('homebudget.edit', compact('homebudget', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        //バリデーション
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category_id' => 'required|numeric',
+            'price' => 'required|numeric',
+        ]);
+
+        //データベースに登録
+        $hasDate = HomeBudget::where('id', '=', $request->id);
+        if ($hasDate->exists()) {
+            $hasDate->update([
+                'date' => $request->date,
+                'category_id' => $request->category_id,
+                'price' => $request->price,
+            ]);
+            session()->flash('flash_message', '支出を更新しました');
+        } else {
+            session()->flash('flash_error_message', '支出を更新できませんでした');
+        }
+
+        // 支出一覧ページにリダイレクト
+        return redirect('/');
     }
 
     /**
