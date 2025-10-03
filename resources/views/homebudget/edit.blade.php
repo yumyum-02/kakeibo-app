@@ -6,7 +6,7 @@
     </head>
     <body>
         <header>
-            <h1>支出編集</h1>
+            <h1>収支編集</h1>
         </header>
 
         <div class="edit-page">

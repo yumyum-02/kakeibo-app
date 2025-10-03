@@ -236,3 +236,20 @@ background: #f2f2f2;
   width: 40%;
   cursor: pointer;
 }
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.total p{
+  margin-right: 10px;
+}
+
+.income{
+  color: mediumaquamarine;
+}
+
+.payment{
+  color: tomato;
+}

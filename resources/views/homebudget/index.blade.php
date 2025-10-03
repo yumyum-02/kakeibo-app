@@ -12,7 +12,7 @@
 
     <section class="container">
         <div class="balance">
-            <h3>支出一覧</h3>
+            <h3>収支一覧</h3>
             @if(session('flash_message'))
               <div class="flash_message">
                 {{ session('flash_message')}}
@@ -33,12 +33,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- 支出データのループ処理 -->
+                    <!-- 収支データのループ処理 -->
                      @foreach($homebudgets as $homebudget)
                       <tr>
                         <td>{{ $homebudget->date }}</td>
                         <td>{{ $homebudget->category->name }}</td>
-                        <td>{{ $homebudget->price }}</td>
+                        <td>
+                          @if($homebudget->category->name == '収入')
+                            <span class="income">
+                          @else
+                            <span class="payment">
+                          @endif
+                          {{ $homebudget->price }}</span>
+                        </td>
                         <td class="button-td">
                           <form action="{{ route('homebudget.edit', ['id' => $homebudget->id]) }}" method="">
                             <input type="submit" value="更新" class="edit-button">
@@ -52,13 +59,19 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="pagination">
-              {{ $homebudgets->links()}}
+            <div class="flex">
+              <div class="pagnation">
+                {{ $homebudgets->links()}}
+              </div>
+              <div class="flex total">
+                <p>収入合計：{{ $income }}円</p>
+                <p>収支合計：{{ $payment }}円</p>
+              </div>
             </div>
         </div>
 
         <div class="add-balance">
-            <h3>支出の追加</h3>
+            <h3>収支の追加</h3>
             <form action="{{ route('store') }}" method="POST">
                 @csrf
                 <label for="date">日付:</label>
