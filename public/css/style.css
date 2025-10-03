@@ -90,3 +90,69 @@ background: #f2f2f2;
   cursor: pointer;
   margin-top: 20px;
 }
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.flash_message {
+  background-color: aquamarine;
+  opacity: 0.4;
+  color: darkgreen;
+}
+
+.flash_error_message {
+  background-color: tomato;
+  opacity: 0.6;
+  color: rgb(59, 0, 0);
+}
+
+.pagination {
+  list-style: none;
+  display: flex;
+}
+
+.pagination li {
+  cursor: pointer;
+  text-align: center;
+  padding: 8px 0px;
+}
+
+.pagination li a {
+  padding: 15px;
+  text-decoration: none;
+  background-color: mediumaquamarine;
+  opacity: 0.8;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.pagination li span {
+  padding: 15px;
+}
+
+.button-td {
+  display: flex;
+  align-items: baseline;
+}
+
+.button-td input,
+.edit-button,
+.delete-button {
+  padding: 8px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button {
+  margin-right: 20px;
+  background-color: orange;
+  text-decoration: none;
+}
+
+.delete-button {
+  background-color: tomato!important;
+}

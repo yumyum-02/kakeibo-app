@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\HomeBudget;
 
 class HomebudgetController extends Controller
 {
@@ -13,7 +14,8 @@ class HomebudgetController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('homebudget.index', compact('categories'));
+        $homebudgets = HomeBudget::with('category')->orderBy('date', 'desc')->paginate(3);
+        return view('homebudget.index', compact('categories', 'homebudgets'));
     }
 
     /**
@@ -29,7 +31,29 @@ class HomebudgetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //バリデーション
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category' => 'required|numeric',
+            'price' => 'required|numeric',
+        ]);
+
+        //データベースに登録
+        $result = HomeBudget::create([
+            'date' => $request->date,
+            'category_id' => $request->category,
+            'price' => $request->price,
+        ]);
+
+        //フラッシュメッセージを表示
+        if(!empty($result)) {
+            session()->flash('flash_message', '支出を登録しました');
+        } else {
+            session()->flash('flash_message', '支出を登録できませんでした');
+        }
+
+        // 支出一覧ページにリダイレクト
+        return redirect('/');
     }
 
     /**

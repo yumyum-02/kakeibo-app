@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/',[HomebudgetController::class, 'index'])->name('index');
+Route::post('/',[HomebudgetController::class, 'store'])->name('store');

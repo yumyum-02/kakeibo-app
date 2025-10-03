@@ -13,6 +13,17 @@
     <section class="container">
         <div class="balance">
             <h3>支出一覧</h3>
+            @if(session('flash_message'))
+              <div class="flash_message">
+                {{ session('flash_message')}}
+              </div>
+            @endif
+
+            @if(session('flash_error_message'))
+              <div class="flash_error_message">
+                {{ session('flash_error_message')}}
+              </div>
+            @endif
             <table>
                 <thead>
                     <tr>
@@ -23,15 +34,37 @@
                 </thead>
                 <tbody>
                     <!-- 支出データのループ処理 -->
+                     @foreach($homebudgets as $homebudget)
+                      <tr>
+                        <td>{{ $homebudget->date }}</td>
+                        <td>{{ $homebudget->category->name }}</td>
+                        <td>{{ $homebudget->price }}</td>
+                        <td class="button-td">
+                          <form action="" method="">
+                            <input type="submit" value="更新" class="edit-button">
+                          </form>
+                          <form action="" method="">
+                            <input type="submit" value="削除" class="delete-button">
+                          </form>
+                        </td>
+                      </tr>
+                    @endforeach
                 </tbody>
             </table>
+            <div class="pagination">
+              {{ $homebudgets->links()}}
+            </div>
         </div>
 
         <div class="add-balance">
             <h3>支出の追加</h3>
-            <form action="/balances" method="POST">
+            <form action="{{ route('store') }}" method="POST">
+                @csrf
                 <label for="date">日付:</label>
                 <input type="date" id="date" name="date">
+                @if($errors->has('date'))
+                  <span class="error">{{ $errors->first('date') }}</span>
+                @endif
 
                 <label for="category">カテゴリ:</label>
                 <select name="category" id="category">
@@ -39,9 +72,15 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                   @endforeach
                 </select>
+                @if($errors->has('category'))
+                  <span class="error">{{ $errors->first('category')}}</span>
+                @endif
 
                 <label for="price">金額:</label>
                 <input type="text" id="price" name="price">
+                @if($errors->has('price'))
+                  <span class="error">{{ $errors->first('price')}}</span>
+                @endif
 
                 <button type="submit">追加</button>
             </form>
