@@ -109,6 +109,9 @@ class HomebudgetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $homebudget = HomeBudget::find($id);
+        $homebudget->delete();
+        session()->flash('flash_message', '支出を削除しました');
+        return redirect('/');
     }
 }

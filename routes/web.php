@@ -11,3 +11,4 @@ Route::get('/',[HomebudgetController::class, 'index'])->name('index');
 Route::post('/',[HomebudgetController::class, 'store'])->name('store');
 Route::get('/edit/{id}',[HomebudgetController::class, 'edit'])->name('homebudget.edit');
 Route::put('/update',[HomebudgetController::class, 'update'])->name('homebudget.update');
+Route::post('/destroy/{id}',[HomebudgetController::class, 'destroy'])->name('homebudget.destroy');

@@ -43,7 +43,8 @@
                           <form action="{{ route('homebudget.edit', ['id' => $homebudget->id]) }}" method="">
                             <input type="submit" value="更新" class="edit-button">
                           </form>
-                          <form action="" method="">
+                          <form action="{{ route('homebudget.destroy', ['id' => $homebudget->id]) }}" method="POST">
+                            @csrf
                             <input type="submit" value="削除" class="delete-button">
                           </form>
                         </td>
